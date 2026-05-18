@@ -13,8 +13,7 @@ public class ClientDTO {
     @NotBlank(message = "Email is required")
     private String email;
 
-    @Size(min = 10, max = 11,
-        message = "Phone must have 10 or 11 digits")
+    @Size(min = 10, max = 11,message = "Phone must have 10 or 11 digits")
     private String phone;
 
     public String getName() {
