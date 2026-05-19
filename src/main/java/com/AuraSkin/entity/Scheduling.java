@@ -3,6 +3,8 @@ package com.AuraSkin.entity;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+import com.AuraSkin.enums.SchedulingStatus;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -21,7 +23,7 @@ public class Scheduling {
 
     private LocalTime time;
 
-    private String status;
+    private SchedulingStatus status;
 
     @ManyToOne
     @JoinColumn(name = "client_id")
@@ -62,14 +64,13 @@ public class Scheduling {
         this.time = time;
     }
 
-    public String getStatus() {
+    public SchedulingStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(SchedulingStatus status) {
         this.status = status;
     }
-
     public Client getClient() {
         return client;
     }
