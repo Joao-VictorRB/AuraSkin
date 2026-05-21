@@ -15,11 +15,11 @@ public class AuraSkinApplication {
         SpringApplication.run(AuraSkinApplication.class, args);
     }
 
-    @Bean
+   /*  @Bean
     CommandLineRunner run(ClientRepository repository) {
         return args -> {
 
-            /* Client client = new Client();
+            Client client = new Client();
             Client client2 = new Client();
 
             client.setName("João Victor");
@@ -32,7 +32,7 @@ public class AuraSkinApplication {
             repository.save(client);
             repository.save(client2);
 
-            System.out.println("Cliente salvo!"); */
+            System.out.println("Cliente salvo!"); 
         };
-    }
+    } */
 }
