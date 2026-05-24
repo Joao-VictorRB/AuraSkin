@@ -192,4 +192,71 @@ public class SchedulingServiceTest {
 
         assertThrows(RuntimeException.class,() -> schedulingService.updateScheduling(1L, dto));
     }
+
+    @Test
+     void shouldThrowExceptionWhenClientNotFoundInScheduling() {
+
+        SchedulingDTO dto = new SchedulingDTO(
+                LocalDate.now(),
+                LocalTime.now(),
+                SchedulingStatus.SCHEDULED,
+                1L,
+                1L,
+                1L
+        );
+
+        when(clientRepository.findById(1L))
+                .thenReturn(Optional.empty());
+
+        assertThrows(RuntimeException.class,
+                () -> schedulingService.saveScheduling(dto));
+    }
+
+    @Test
+    void shouldThrowExceptionWhenProfessionalNotFoundInScheduling() {
+
+        SchedulingDTO dto = new SchedulingDTO(
+                LocalDate.now(),
+                LocalTime.now(),
+                SchedulingStatus.SCHEDULED,
+                1L,
+                1L,
+                1L
+        );
+
+        Client client = new Client();
+
+        when(clientRepository.findById(1L))
+                .thenReturn(Optional.of(client));
+
+        when(professionalRepository.findById(1L))
+                .thenReturn(Optional.empty());
+
+        assertThrows(RuntimeException.class,
+                () -> schedulingService.saveScheduling(dto));
+    }
+
+    @Test
+    void shouldThrowExceptionWhenProcedureNotFoundInScheduling() {
+
+        SchedulingDTO dto = new SchedulingDTO(
+                LocalDate.now(),
+                LocalTime.now(),
+                SchedulingStatus.SCHEDULED,
+                1L,
+                1L,
+                1L
+        );
+
+        Client client = new Client();
+        Professional professional = new Professional();
+
+        when(clientRepository.findById(1L)).thenReturn(Optional.of(client));
+
+        when(professionalRepository.findById(1L)).thenReturn(Optional.of(professional));
+
+        when(procedureRepository.findById(1L)).thenReturn(Optional.empty());
+
+        assertThrows(RuntimeException.class,() -> schedulingService.saveScheduling(dto));
+    }
 }

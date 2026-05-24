@@ -78,14 +78,22 @@ public class ProcedureServiceTest {
                 () -> procedureService.getProcedureById(1L));
     }
 
-    @Test
-    void shouldUpdateProcedure() {
+     @Test
+     void shouldUpdateAllProcedureFields() {
 
         Procedure existing = new Procedure();
+
         existing.setName("Old");
+        existing.setDescription("Old Desc");
+        existing.setPrice(100f);
+        existing.setDurationMin(30);
 
         Procedure updated = new Procedure();
+
         updated.setName("New");
+        updated.setDescription("New Desc");
+        updated.setPrice(250f);
+        updated.setDurationMin(60);
 
         when(procedureRepository.findById(1L))
                 .thenReturn(Optional.of(existing));
@@ -97,7 +105,10 @@ public class ProcedureServiceTest {
                 procedureService.updateProcedure(1L, updated);
 
         assertEquals("New", result.getName());
-    }
+        assertEquals("New Desc", result.getDescription());
+        assertEquals(250.0f, result.getPrice());
+        assertEquals(60, result.getDurationMin());
+     }   
 
     @Test
     void shouldThrowExceptionWhenUpdatingProcedureNotFound() {
@@ -111,12 +122,15 @@ public class ProcedureServiceTest {
                 () -> procedureService.updateProcedure(1L, procedure));
     }
 
-    @Test
-    void shouldDeleteProcedure() {
+   @Test
+   void shouldCallDeleteProcedure() {
+
+        doNothing().when(procedureRepository)
+                .deleteById(1L);
 
         procedureService.deleteProcedure(1L);
 
-        verify(procedureRepository, times(1))
+        verify(procedureRepository)
                 .deleteById(1L);
-    }
+   }
 }
