@@ -26,12 +26,12 @@ public class ClientService {
 
     public Client getClientById(Long id) {
 
-        return repository.findById(id).orElse(null);
-    }
+        return repository.findById(id).orElseThrow(() -> new RuntimeException("Client not found"));
+    }   
 
     public Client updateClient(Long id, Client client) {
 
-        Client existingClient = repository.findById(id).orElse(null);
+        Client existingClient = repository.findById(id).orElseThrow(() -> new RuntimeException("Client not found"));
 
         if (existingClient != null) {
 
@@ -48,7 +48,7 @@ public class ClientService {
             return repository.save(existingClient);
         }
 
-        return null;
+        throw new RuntimeException("Client not found");
     }
 
     public void deleteClient(Long id) {

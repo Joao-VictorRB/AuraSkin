@@ -27,12 +27,12 @@ public class ProcedureService {
 
     public Procedure getProcedureById(Long id) {
 
-        return repository.findById(id).orElse(null);
+         return repository.findById(id).orElseThrow(() -> new RuntimeException("Procedure not found"));
     }
 
     public Procedure updateProcedure(Long id, Procedure procedure) {
 
-        Procedure existingProcedure = repository.findById(id).orElse(null);
+        Procedure existingProcedure = repository.findById(id).orElseThrow(() -> new RuntimeException("Procedure not found"));
 
         if (existingProcedure != null) {
 

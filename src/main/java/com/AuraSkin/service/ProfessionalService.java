@@ -24,11 +24,12 @@ public class ProfessionalService {
     }
 
     public Professional getProfessionalById(Long id) {
-        return repository.findById(id).orElse(null);
+
+        return repository.findById(id).orElseThrow(() -> new RuntimeException("Professional not found"));
     }
 
     public Professional updateProfessional(Long id, Professional professional) {
-        Professional existingProfessional = repository.findById(id).orElse(null);
+        Professional existingProfessional = repository.findById(id).orElseThrow(() -> new RuntimeException("Professional not found"));
 
         if (existingProfessional != null) {
 
@@ -42,7 +43,7 @@ public class ProfessionalService {
             return repository.save(existingProfessional);
         }
 
-        return null;
+        throw new RuntimeException("Professional not found");
     }
 
     public void deleteProfessional(Long id) {
