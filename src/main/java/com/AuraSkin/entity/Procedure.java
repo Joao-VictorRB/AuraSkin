@@ -46,7 +46,7 @@ public class Procedure {
         return price;
     }
 
-    public void setPrice(float price){
+    public void setPrice(Float price){
         this.price = price;
     }
 
@@ -54,7 +54,7 @@ public class Procedure {
         return durationMin;
     }
 
-    public void setDurationMin(int durationMin){
+    public void setDurationMin(Integer durationMin){
         this.durationMin = durationMin;
     }
 
