@@ -2,6 +2,7 @@ package com.AuraSkin.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
@@ -129,5 +130,26 @@ public class ClientServiceTest {
 
         verify(repository)
                 .deleteById(1L);
+    }
+
+    @Test
+    void shouldThrowExceptionWhenClientNotFound() {
+
+        when(repository.findById(1L))
+                .thenReturn(Optional.empty());
+
+        assertThrows(RuntimeException.class,
+                () -> service.getClientById(1L));
+    }
+
+    @Test
+    void shouldThrowExceptionWhenUpdatingNonexistentClient() {
+
+        Client client = new Client();
+
+        when(repository.findById(1L))
+                .thenReturn(Optional.empty());
+
+        assertThrows(RuntimeException.class,() -> service.updateClient(1L, client));
     }
 }

@@ -133,4 +133,63 @@ public class SchedulingServiceTest {
         verify(schedulingRepository, times(1))
                 .deleteById(1L);
     }
+
+    @Test
+    void shouldUpdateScheduling() {
+
+        Scheduling existing = new Scheduling();
+
+        SchedulingDTO dto = new SchedulingDTO(
+                LocalDate.now(),
+                LocalTime.now(),
+                SchedulingStatus.DONE,
+                1L,
+                1L,
+                1L
+        );
+
+        Client client = new Client();
+        Professional professional = new Professional();
+        Procedure procedure = new Procedure();
+
+        when(schedulingRepository.findById(1L))
+                .thenReturn(Optional.of(existing));
+
+        when(clientRepository.findById(1L))
+                .thenReturn(Optional.of(client));
+
+        when(professionalRepository.findById(1L))
+                .thenReturn(Optional.of(professional));
+
+        when(procedureRepository.findById(1L))
+                .thenReturn(Optional.of(procedure));
+
+        when(schedulingRepository.save(existing))
+                .thenReturn(existing);
+
+        Scheduling result =
+                schedulingService.updateScheduling(1L, dto);
+
+        assertEquals(SchedulingStatus.DONE,
+                result.getStatus());
+    }
+
+
+    @Test
+    void shouldThrowExceptionWhenUpdatingSchedulingNotFound() {
+
+        SchedulingDTO dto = new SchedulingDTO(
+                LocalDate.now(),
+                LocalTime.now(),
+                SchedulingStatus.SCHEDULED,
+                1L,
+                1L,
+                1L
+        );
+
+        when(schedulingRepository.findById(1L))
+                .thenReturn(Optional.empty());
+
+        assertThrows(RuntimeException.class,() -> schedulingService.updateScheduling(1L, dto));
+    }
 }

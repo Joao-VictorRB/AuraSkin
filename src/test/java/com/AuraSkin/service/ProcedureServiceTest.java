@@ -79,6 +79,39 @@ public class ProcedureServiceTest {
     }
 
     @Test
+    void shouldUpdateProcedure() {
+
+        Procedure existing = new Procedure();
+        existing.setName("Old");
+
+        Procedure updated = new Procedure();
+        updated.setName("New");
+
+        when(procedureRepository.findById(1L))
+                .thenReturn(Optional.of(existing));
+
+        when(procedureRepository.save(existing))
+                .thenReturn(existing);
+
+        Procedure result =
+                procedureService.updateProcedure(1L, updated);
+
+        assertEquals("New", result.getName());
+    }
+
+    @Test
+    void shouldThrowExceptionWhenUpdatingProcedureNotFound() {
+
+        Procedure procedure = new Procedure();
+
+        when(procedureRepository.findById(1L))
+                .thenReturn(Optional.empty());
+
+        assertThrows(RuntimeException.class,
+                () -> procedureService.updateProcedure(1L, procedure));
+    }
+
+    @Test
     void shouldDeleteProcedure() {
 
         procedureService.deleteProcedure(1L);

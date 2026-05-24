@@ -70,15 +70,46 @@ public class ProfessionalServiceTest {
         assertEquals(1L, found.getIdProfessional());
     }
 
+    @Test
+    void shouldUpdateProfessional() {
+
+        Professional existing = new Professional();
+        existing.setName("Maria");
+
+        Professional updated = new Professional();
+        updated.setName("Ana");
+
+        when(professionalRepository.findById(1L))
+                .thenReturn(Optional.of(existing));
+
+        when(professionalRepository.save(existing))
+                .thenReturn(existing);
+
+        Professional result =
+                professionalService.updateProfessional(1L, updated);
+
+        assertEquals("Ana", result.getName());
+    }
+
+    @Test
+    void shouldThrowExceptionWhenUpdatingProfessionalNotFound() {
+
+        Professional professional = new Professional();
+
+        when(professionalRepository.findById(1L))
+                .thenReturn(Optional.empty());
+
+        assertThrows(RuntimeException.class,
+                () -> professionalService.updateProfessional(1L, professional));
+    }
+
    @Test
    void shouldThrowExceptionWhenProfessionalNotFound() {
 
         when(professionalRepository.findById(1L))
                 .thenReturn(Optional.empty());
 
-
-        Professional found = professionalService.getProfessionalById(1L);
-        assertNull(found);
+        assertThrows(RuntimeException.class,() -> professionalService.getProfessionalById(1L));
  }
 
     @Test
