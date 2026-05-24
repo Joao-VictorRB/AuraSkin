@@ -1,5 +1,6 @@
 package com.AuraSkin.controller;
 
+import com.AuraSkin.dto.ProcedureDTO;
 import com.AuraSkin.entity.Procedure;
 import com.AuraSkin.service.ProcedureService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -68,15 +69,24 @@ public class ProcedureControllerTest {
     @SuppressWarnings("null")
     void shouldCreateProcedure() throws Exception {
 
+        ProcedureDTO dto = new ProcedureDTO();
+        dto.setName("Limpeza");
+        dto.setDescription("Limpeza facial");
+        dto.setPrice(150f);
+        dto.setDurationMin(60);
+
         Procedure procedure = new Procedure();
-        procedure.setName("Limpeza");
+        procedure.setName(dto.getName());
+        procedure.setDescription(dto.getDescription());
+        procedure.setPrice(dto.getPrice());
+        procedure.setDurationMin(dto.getDurationMin());
 
         when(procedureService.saveProcedure(any(Procedure.class)))
                 .thenReturn(procedure);
 
         mockMvc.perform(post("/procedures")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(procedure)))
+                .content(objectMapper.writeValueAsString(dto)))
                 .andExpect(status().isOk());
     }
 

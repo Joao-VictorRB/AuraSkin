@@ -1,5 +1,6 @@
 package com.AuraSkin.controller;
 
+import com.AuraSkin.dto.ProfessionalDTO;
 import com.AuraSkin.entity.Professional;
 import com.AuraSkin.service.ProfessionalService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -66,17 +67,22 @@ public class ProfessionalControllerTest {
 
     @Test
     @SuppressWarnings("null")
-    void shouldCreateProfessional() throws Exception {
+        void shouldCreateProfessional() throws Exception {
+
+        ProfessionalDTO dto = new ProfessionalDTO();
+        dto.setName("Maria");
+        dto.setSpecialty("Dermatologista");
 
         Professional professional = new Professional();
-        professional.setName("Maria");
+        professional.setName(dto.getName());
+        professional.setSpecialty(dto.getSpecialty());
 
         when(professionalService.saveProfessional(any(Professional.class)))
                 .thenReturn(professional);
 
         mockMvc.perform(post("/professionals")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(professional)))
+                .content(objectMapper.writeValueAsString(dto)))
                 .andExpect(status().isOk());
     }
 
