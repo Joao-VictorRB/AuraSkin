@@ -1,6 +1,6 @@
 # AuraSkin
 
-AuraSkin é uma API REST desenvolvida com Spring Boot para gerenciamento de clínicas de estética e cuidados com a pela. O sistema permite o cadastro e gerenciamento de clientes, profissionais, procedimentos e agendamentos, fornecendo uma solução completa para controle operacional da clínica.
+AuraSkin é uma API REST desenvolvida com Spring Boot para gerenciamento de clínicas de estética e cuidados com a pele. O sistema permite o cadastro e gerenciamento de clientes, profissionais, procedimentos e agendamentos, fornecendo uma solução completa para controle operacional da clínica.
 
 O projeto foi desenvolvido seguindo boas práticas de arquitetura em camadas, utilizando Spring Boot, JPA, PostgreSQL, Docker e testes automatizados.
 
